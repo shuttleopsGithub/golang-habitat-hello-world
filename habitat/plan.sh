@@ -1,7 +1,19 @@
 #!/bin/bash
 
-pkg_version="0.1.0"
 pkg_name=golang-habitat-hello-world
-pkg_origin=shuttleops-golang-example
-pkg_scaffolding="core/scaffolding-go"
-pkg_bin_dirs=(bin)
+pkg_version=0.1.0
+pkg_build_deps=(
+    core/go
+)
+pkg_bin_dirs=(
+    bin
+)
+
+do_build() {
+    go build -o "${pkg_name}"
+}
+
+do_install() {
+    mkdir -p "${pkg_prefix}/bin"
+    mv "${SRC_PATH}/${pkg_name}" "${pkg_prefix}/bin/"
+}
