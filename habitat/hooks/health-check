@@ -1,0 +1,22 @@
+#!/bin/bash
+
+pid="$(cat {{pkg.svc_pid_file}})"
+output_fd="/proc/$pid/fd/2"
+
+if [[ -p "$output_fd" ]]; # check if pipe exists
+then
+    date_last_message="$(date -d "$(cat $output_fd | grep -m1 "{{cfg.message}}" | sed 's/{{cfg.message}}//')" +%s)"
+    date_now="$(date +%s)"
+    date_diff=`expr $date_now - $date_last_message`
+
+    echo "date_diff: $date_diff"
+
+    if [[ "$date_diff" -le "{{cfg.health.threshold}}" ]];
+    then
+        exit 0 # ok
+    else
+        exit 2 # critical
+    fi
+else
+    exit 3 # unknown
+fi

@@ -2,4 +2,4 @@
 
 echo "We're going to run this package now:"
 
-exec {{pkg.name}}
+exec {{pkg.name}} "{{cfg.message}}"
