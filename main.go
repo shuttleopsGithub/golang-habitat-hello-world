@@ -2,17 +2,16 @@ package main
 
 import (
 	"log"
-	"os"
 	"time"
 )
 
 func main() {
 	for {
-		log.Println(message(os.Args[1]))
+		log.Println(message())
 		time.Sleep(time.Second)
 	}
 }
 
-func message(message string) string {
-	return message
+func message() string {
+	return "Hello World"
 }
